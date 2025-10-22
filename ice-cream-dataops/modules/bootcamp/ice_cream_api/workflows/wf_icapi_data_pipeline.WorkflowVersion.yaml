@@ -8,14 +8,16 @@ workflowDefinition:
       transformation:
         externalId: create_asset_hierarchy
         concurrencyPolicy: fail
+
   - externalId: contextualize_ts_assets_task
     type: transformation
     parameters:
       transformation:
         externalId: contextualize_ts_assets
         concurrencyPolicy: fail
-        dependsOn: 
-          - externalId: create_asset_hierarchy_task
+    dependsOn: 
+      - externalId: create_asset_hierarchy_task
+
   - externalId: icapi_datapoints_extractor_task
     type: function
     parameters:
@@ -27,6 +29,7 @@ workflowDefinition:
     onFailure: abortWorkflow
     dependsOn: 
       - externalId: contextualize_ts_assets_task
+
   - externalId: oee_timeseries_task
     type: function
     parameters:
